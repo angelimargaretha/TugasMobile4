@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/ivFoto"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/ahmad_dahlan"
+        />
+
+    <LinearLayout
+        android:layout_toRightOf="@+id/ivFoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Nama: Ahmad Dahlan "/>
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Desc : "
+            android:maxLines="10"
+            android:ellipsize="end"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
