@@ -2,6 +2,7 @@ package com.example.mobile3;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,19 +15,21 @@ import com.bumptech.glide.request.RequestOptions;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ViewHolder> {
     private ArrayList<Hero> listHero;
+    private Context context;
 
-
-     public HeroAdapter(ArrayList<Hero> List){
+     public HeroAdapter(ArrayList<Hero> List, Context context){
         this.listHero = List;
+        this.context = context;
      }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemRow = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_row_hero, parent, false);
+        View itemRow = LayoutInflater.from(context).inflate(R.layout.item_row_hero, parent, false);
         return new ViewHolder(itemRow);
     }
 
@@ -42,10 +45,15 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(holder.itemView.getContext(),DetailActivity.class);
-                intent.putExtra("Data",listHero.get(position));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                holder.itemView.getContext().startActivity(intent);
+                AppCompatActivity appCompatActivity = (AppCompatActivity) v.getContext();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("Data",hero);
+                DetailFragment fragment = new DetailFragment();
+                fragment.setArguments(bundle);
+                appCompatActivity.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_fragment,fragment,fragment.getClass().getSimpleName())
+                        .addToBackStack(null)
+                        .commit();
 
             }
         });

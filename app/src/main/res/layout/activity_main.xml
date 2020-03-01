@@ -7,28 +7,12 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_hero_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-    </LinearLayout>
+   <FrameLayout
+       android:id="@+id/main_fragment"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_hero"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+       />
 
 
 

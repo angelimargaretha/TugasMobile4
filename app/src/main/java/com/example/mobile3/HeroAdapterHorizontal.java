@@ -1,6 +1,8 @@
 package com.example.mobile3;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,25 +15,28 @@ import com.bumptech.glide.request.RequestOptions;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class HeroAdapterHorizontal extends RecyclerView.Adapter<HeroAdapterHorizontal.ViewHolder> {
     private ArrayList<Hero> listHero;
+    private Context context;
 
 
-     public HeroAdapterHorizontal(ArrayList<Hero> List){
+     public HeroAdapterHorizontal(ArrayList<Hero> List, Context context) {
         this.listHero = List;
+        this.context = context;
      }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemRow = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_hero_horizontal, parent, false);
+        View itemRow = LayoutInflater.from(context).inflate(R.layout.item_hero_horizontal, parent, false);
         return new ViewHolder(itemRow);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-       Hero hero = listHero.get(position);
+       final Hero hero = listHero.get(position);
         Glide.with(holder.itemView.getContext())
                 .load(hero.getFoto())
                 .apply(new RequestOptions().override(200, 200))
@@ -41,10 +46,15 @@ public class HeroAdapterHorizontal extends RecyclerView.Adapter<HeroAdapterHoriz
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(holder.itemView.getContext(),DetailActivity.class);
-                intent.putExtra("Data",listHero.get(position));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                holder.itemView.getContext().startActivity(intent);
+                AppCompatActivity appCompatActivity = (AppCompatActivity) v.getContext();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("Data",hero);
+                DetailFragment fragment = new DetailFragment();
+                fragment.setArguments(bundle);
+                appCompatActivity.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_fragment,fragment,fragment.getClass().getSimpleName())
+                        .addToBackStack(null)
+                        .commit();
 
             }
         });
